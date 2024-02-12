@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+      h1 {
+        text-align: center;
+      }
+      .weather-info {
+        margin-top: 20px;
+      }
+      .weather-info p {
+        font-size: 18px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Weather Report</h1>
+      <div id="result"></div>
+    </div>
+
+    <!-- Realiza una solicitud a la ruta /weather y obtiene los datos-->
+    <script>
+      fetch("/weather")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("result").innerHTML = `
+          <p>Timezone: ${data.timezone}</p>
+          <p>Current time: ${data.current.time}</p>
+          <p>Temperature: ${data.current.temperature_2m}</p>
+          <p>Relative Humidity: ${data.current.relative_humidity_2m}</p>
+          <p>Is day?: ${data.current.is_day}</p>
+          <p>Precipitation: ${data.current.precipitation}</p>
+          <p>Rain: ${data.current.rain}</p>
+          <p>Wind Speed: ${data.current.wind_speed_10m}</p>
+                `;
+        })
+        .catch((error) => {
+          // Manejar errores
+          console.error("Error al obtener los datos de la API:", error);
+        });
+    </script>
+  </body>
+</html>
